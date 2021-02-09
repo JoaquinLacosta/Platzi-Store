@@ -1,5 +1,6 @@
 import React, { useContext } from "react"
 import { Link } from "react-router-dom"
+import { Helmet } from "react-helmet"
 import handleSumTotal from "../utils/handleSumTotal"
 import AppContext from "../context/AppContext"
 import "../styles/components/Checkout.css"
@@ -15,22 +16,46 @@ const Checkout = () => {
 
 
   return(
-    <div className="Checkout">
-      <div className="Checkout-content">
-        {cart.length > 0 ? <h3>Lista de Pedidos</h3> : <h3>Sin pedidos</h3> }
-        {cart.map(item => (
-          <div className="Checkout-item" key={item.id}>
-            <div className="Checkout-element">
-              <h4>{item.title}</h4>
-              <span>{`$ ${item.price}`}</span>
+    <>
+      <Helmet>
+        <title>Lista de pedidos - Platzi Conf Merch</title>
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@notengo" />
+        <meta name="twitter:creator" content="@notengo" />
+        <meta name="twitter:title" content="Platzi Conf Store" />
+        <meta name="twitter:description" content="Platzi Conf Store" />
+        <meta
+          name="twitter:image"
+          content="https://s3.amazonaws.com/gndx.dev/gndxdev.png"
+        />
+        <meta property="og:title" content="Platzi Conf Store" />
+        <meta property="og:description" content="Platzi Conf Store" />
+        <meta
+          property="og:image"
+          content="https://s3.amazonaws.com/gndx.dev/gndxdev.png"
+        />
+        <meta property="og:url" content="platzistore.xyz" />
+        <meta property="og:site_name" content="Platzi Conf Store" />
+        <meta property="og:locale" content="es_ES" />
+        <meta property="og:type" content="article" />
+        <meta property="fb:app_id" content="132123132321" />
+      </Helmet>
+      <div className="Checkout">
+        <div className="Checkout-content">
+          {cart.length > 0 ? <h3>Lista de Pedidos</h3> : <h3>Sin pedidos</h3> }
+          {cart.map(item => (
+            <div className="Checkout-item" key={item.id}>
+              <div className="Checkout-element">
+                <h4>{item.title}</h4>
+                <span>{`$ ${item.price}`}</span>
+              </div>
+              <button type="button" onClick={handleRemove(item)}>
+                <i className="fas fa-trash-alt" />
+              </button>
             </div>
-            <button type="button" onClick={handleRemove(item)}>
-              <i className="fas fa-trash-alt" />
-            </button>
-          </div>
         ))}
-      </div>
-      {cart.length > 0 && (
+        </div>
+        {cart.length > 0 && (
         <div className="Checkout-sidebar">
           <h3>{`Precio Total: $${handleSumTotal(cart)}`}</h3>
           <Link to="/checkout/information">
@@ -38,7 +63,8 @@ const Checkout = () => {
           </Link>
         </div>
       )}
-    </div>
+      </div>
+    </>
     )}
 
 export default Checkout
